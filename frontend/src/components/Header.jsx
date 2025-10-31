@@ -15,7 +15,7 @@ export default function Header() {
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gray-900/70 backdrop-blur-md text-white border-b border-gray-700 shadow-lg"
+      className="bg-gray-900/80 backdrop-blur-md text-white border-b border-gray-700 shadow-md sticky top-0 z-50"
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
@@ -23,7 +23,7 @@ export default function Header() {
           to="/"
           className="text-2xl font-extrabold text-cyan-400 hover:text-cyan-300 transition-all"
         >
-          ⚡ AI Quiz App
+          💡 Quizzo
         </Link>
 
         {/* Navigation */}

@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import api from "../utils/api";
 import { motion } from "framer-motion";
-import { Brain, Save, PlusCircle, Eye, EyeOff } from "lucide-react";
+import { Brain, Save, PlusCircle, Eye, EyeOff, Timer } from "lucide-react";
 
 export default function QuizCreator() {
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [numQuestions, setNumQuestions] = useState(5);
   const [questions, setQuestions] = useState([]);
+  const [timer, setTimer] = useState(0); // 🕒 new timer state
   const [currentQ, setCurrentQ] = useState({
     question: "",
     options: ["", "", "", ""],
     answer: "",
   });
   const [loadingAI, setLoadingAI] = useState(false);
-  const [showPreview, setShowPreview] = useState(false); // 👈 new state
+  const [showPreview, setShowPreview] = useState(false); // 👈 existing
 
+  // Add a new question
   const addQuestion = () => {
     if (!currentQ.question || !currentQ.answer)
       return alert("⚠️ Fill question & answer!");
@@ -23,15 +25,17 @@ export default function QuizCreator() {
     setCurrentQ({ question: "", options: ["", "", "", ""], answer: "" });
   };
 
+  // Save quiz
   const handleCreateQuiz = async () => {
     if (!title.trim() || !topic.trim() || questions.length === 0)
       return alert("⚠️ Please fill all fields before saving!");
     try {
-      await api.post("/api/quiz/create", { title, topic, questions });
+      await api.post("/api/quiz/create", { title, topic, questions, timer }); // ✅ include timer
       alert("✅ Quiz created successfully!");
       setTitle("");
       setTopic("");
       setQuestions([]);
+      setTimer(0);
       setShowPreview(false);
     } catch (err) {
       console.error("Error creating quiz:", err);
@@ -39,6 +43,7 @@ export default function QuizCreator() {
     }
   };
 
+  // AI generate
   const handleGenerateAI = async () => {
     try {
       setLoadingAI(true);
@@ -75,6 +80,22 @@ export default function QuizCreator() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+
+        {/* 🕒 Timer input */}
+        <div className="flex items-center gap-3 mb-6 bg-gray-900/80 border border-gray-700 p-4 rounded-lg">
+          <Timer className="text-cyan-400 w-5 h-5" />
+          <input
+            type="number"
+            min="1"
+            placeholder="Set timer (in minutes)"
+            className="p-2 w-40 rounded bg-gray-800 border border-gray-700 text-center"
+            value={timer}
+            onChange={(e) => setTimer(parseInt(e.target.value) || 0)}
+          />
+          <span className="text-sm text-gray-400">
+            ⏱ Leave 0 for unlimited time
+          </span>
+        </div>
 
         {/* AI Generator */}
         <div className="mb-6 p-4 rounded-lg bg-gray-900/80 border border-gray-700">
@@ -175,12 +196,15 @@ export default function QuizCreator() {
           )}
         </div>
 
-        {/* 👇 Preview (hidden by default) */}
+        {/* 👇 Preview Section */}
         {showPreview && questions.length > 0 && (
           <div className="mt-8 bg-gray-900/70 border border-gray-700 rounded-lg p-5">
             <h2 className="text-xl font-bold mb-4 text-cyan-400">
               Preview ({questions.length})
             </h2>
+            <p className="text-sm text-gray-400 mb-4">
+              Timer: {timer > 0 ? `${timer} minutes` : "Unlimited"}
+            </p>
             {questions.map((q, i) => (
               <div key={i} className="mb-3">
                 <p className="font-semibold text-gray-100">

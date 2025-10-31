@@ -65,3 +65,22 @@ export const saveAttempt = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteQuiz = async (req, res) => {
+  try {
+    const quiz = await Quiz.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.id, // ensure user can only delete their quiz
+    });
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found or not authorized" });
+    }
+
+    res.json({ message: "Quiz deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting quiz:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+

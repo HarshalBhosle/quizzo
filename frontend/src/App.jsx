@@ -14,12 +14,12 @@ import ProtectedRoute from "./components/ProtectedRoute"; // 👈 import here
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          
+
           {/* 🔒 Protected Routes */}
           <Route
             path="/dashboard"
