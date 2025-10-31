@@ -6,13 +6,11 @@ export default defineConfig({
     tailwindcss(),
   ],
   build: {
-    chunkSizeWarningLimit: 1000, // increase warning limit to 1MB
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split large dependencies into separate chunks
           react: ['react', 'react-dom'],
-          chart: ['chart.js'],
           motion: ['framer-motion'],
         },
       },
