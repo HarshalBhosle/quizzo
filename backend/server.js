@@ -14,8 +14,10 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://quizzo-git-main-harshalbhosles-projects.vercel.app",
-      "http://localhost:5173"
+      "https://quizzo.vercel.app", // your main production link
+      "https://quizzo-zeta.vercel.app", // your new deployment
+      "https://quizzo-git-main-harshalbhosles-projects.vercel.app", // old one
+      "http://localhost:5173", // local dev
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
