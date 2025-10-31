@@ -14,7 +14,7 @@ export default function Home() {
         className="flex flex-col justify-center items-center text-center py-20 px-6"
       >
         <h1 className="text-6xl md:text-7xl font-extrabold mb-4 text-cyan-400 drop-shadow-[0_0_25px_#00ffff]">
-          AI Quiz App 🤖
+          Quizzo 🤖
         </h1>
         <p className="text-lg md:text-xl mb-10 text-gray-300 max-w-2xl leading-relaxed">
           Build smarter quizzes with AI, test your knowledge, and analyze your
