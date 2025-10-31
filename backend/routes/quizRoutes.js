@@ -13,7 +13,7 @@ router.get("/myquizzes", verifyToken, getAllQuizzes);
 // Fetch single quiz by ID
 router.get("/:id", getQuizById);
 router.post("/attempt", verifyToken, saveAttempt);
-router.delete("/:id", authMiddleware, deleteQuiz);
+router.delete("/:id", verifyToken, deleteQuiz);
 
 export default router;
 
